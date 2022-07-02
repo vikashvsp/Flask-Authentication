@@ -12,24 +12,26 @@ from flask_login import (
     login_required,
 )
 
-login_manager=LoginManager()
-login_manager.session_protection="strong"
-login_manager.login_view="login"
-login_manager.login_message_category="info"
+login_manager = LoginManager()
+login_manager.session_protection = "strong"
+login_manager.login_view = "login"
+login_manager.login_message_category = "info"
 
-db=SQLAlchemy()
-migrate=Migrate()
-bcrypt=Bcrypt()
+db = SQLAlchemy()
+migrate = Migrate()
+bcrypt = Bcrypt()
+
 
 def create_app():
-    app=Flask(__name__)
-    app.secret_key='secret-key'
-    app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///database.db"
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True
+    app = Flask(__name__)
+
+    app.secret_key = 'secret-key'
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
     login_manager.init_app(app)
     db.init_app(app)
-    migrate.init_app(app,db)
+    migrate.init_app(app, db)
     bcrypt.init_app(app)
-
+    
     return app
